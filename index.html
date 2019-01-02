@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Den Ilin</title>
+  <link href="https://fonts.googleapis.com/css?family=Overpass+Mono" rel="stylesheet">
+</head>
+<style>
+html, body {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  background: linear-gradient(360deg, #e9eaea 10%, #f4f4f4 360%);
+}
+.app {
+  height: 100%;
+  width: 100%;
+  display: flex;
+}
+.matrix {
+  font-family: 'Overpass Mono', monospace;
+  font-size: 50px;
+  margin: auto;
+}
+
+.row {
+  display: flex;
+  flex-wrap: wrap;
+  margin: auto;
+}
+
+.row div {
+  width: 60px;
+  height: 60px;
+  text-transform: uppercase;
+  text-align: center;
+  line-height: 92%;
+  letter-spacing: 10px;
+  cursor: default;
+}
+.el {
+  color: black;
+  font-weight: bold;
+}
+.none {
+  font-weight: 100;
+  color: #cbcbcb;
+  text-shadow: 2px 0px 1px white;
+  opacity: 0.5;
+}
+.img_cont {
+  display: flex;
+  opacity: 0.2;
+  transition: opacity 0.3s;
+}
+.img_cont:hover {
+  opacity: 1;
+}
+.symbol {
+  width: 44px;
+  height: 44px;
+  margin: auto;
+  cursor: pointer; 
+}
+.maker {
+  color: red;
+}
+
+
+@media only screen and (max-width: 600px), (orientation:landscape) and (max-height: 540px) {
+  .matrix {
+    font-size: 40px;
+  }
+  .row div {
+    width: 40px;
+    height: 40px;
+  }
+  .symbol {
+    width: 34px;
+    height: 34px;
+  }
+}
+
+@media only screen and (max-width: 480px), (orientation:landscape) and (max-height: 420px) {
+  .matrix {
+    font-size: 30px;
+  }
+  .row div {
+    width: 30px;
+    height: 30px;
+  }
+  .symbol {
+    width: 24px;
+    height: 24px;
+  }
+}
+
+</style>
+<body>
+  <div class="app"></div>
+</body>
+<script>
+
+const MATRIX_SIZE = 10
+const NAME = 'DEN'
+const SURNAME = 'ILIN'
+const SYMBOL = 'S'
+const A = 'SOFTWARE'
+const DEVELOPER = 'DEVELOPER'
+const MAKER = 'MAKER'
+const C = 'ABC'
+const matrix = Array(MATRIX_SIZE).fill().map(() => Array(MATRIX_SIZE).fill())
+
+function random () {
+  return Math.floor(Math.random() * MATRIX_SIZE)
+}
+
+function randomLetter () {
+  const r = 'abcdefghijklmnopqrstuvwxyz';
+	return r.charAt(Math.floor(Math.random() * r.length))
+}
+
+function generatePosition (len, orientation) {
+  let posX = MATRIX_SIZE
+  let posY = MATRIX_SIZE
+  while ((posX + len > MATRIX_SIZE) || (posY + len > MATRIX_SIZE)) {
+    posX = random()
+    posY = random()
+  }
+  console.warn('generate pos = ', { x:posX, y:posY })
+
+
+  for (let i = 0; i < len; i++) {
+    if (orientation) {
+      if (matrix[posX] && matrix[posX][posY + i]) {
+        console.warn('collision vertical')
+        return generatePosition(len, orientation)
+      }
+    } else {
+      if (matrix[posX + i] && matrix[posX + i][posY]) {
+        console.warn('collision horizontal')
+        return generatePosition(len, orientation)
+      }
+    }
+    
+  }
+
+  console.warn('final pos = ', { x:posX, y:posY })
+  return { x:posX, y:posY }
+}
+
+function matrixInsertString (name, props) {
+  const len = name.length
+  const isHorizontalOrient = Math.round(Math.random())
+  const position = generatePosition(len, isHorizontalOrient)
+
+  Array.from(name).forEach((el, i) => {
+    const matrixEL = {letter: el, class: 'el', ...name, ...props }
+    if (isHorizontalOrient) { // horizontal
+      matrix[position.x][position.y + i] = matrixEL
+    } else { // vertical
+      matrix[position.x + i][position.y] = matrixEL
+    }
+  })
+}
+
+function drawMatrix () {
+  let row = ''
+  const renderMatrix = matrix.forEach(el => {
+    row += '<div class="row">'
+    el.forEach(el2 => {
+      if (el2) {
+        if(el2.type === 'symbol') {
+          row += `<div class="img_cont"><a target="_blank" title="${el2.network}" href="https://${el2.site}"><img class="symbol" src="${el2.network}.png"/></a></div>`
+          return 
+        }
+        row += `<div class="${el2.class}">${el2.letter}</div>`
+        return
+      }
+      
+      row += `<div class="none">${randomLetter()}</div>`
+    })
+    row += '</div>'
+  })
+
+  var node = document.createElement("div")
+  node.className = 'matrix'
+  node.innerHTML = row
+  document.querySelector('.app').appendChild(node)
+}
+
+matrixInsertString(MAKER, {class: 'maker'})
+matrixInsertString(NAME)
+matrixInsertString(SURNAME)
+matrixInsertString(SYMBOL, {type: 'symbol', network: 'github', site: 'github.com/followdarko'})
+matrixInsertString(SYMBOL, {type: 'symbol', network: 'telegram', site: 't.me/denilin'})
+matrixInsertString(SYMBOL, {type: 'symbol', network: 'twitter', site: 'twitter.com/followdarko'})
+
+console.warn(matrix)
+drawMatrix()
+</script>
+</html>
