@@ -12,9 +12,11 @@
   "scripts": {
     "dev": "cp src/* dist/ && parcel index.html",
     "build": "parcel build index.html && cp src/* dist/",
-    "deploy": "./deploy.sh"
+    "predeploy": "rm -rf dist && yarn build",
+    "deploy": "gh-pages -d dist"
   },
   "dependencies": {
+    "gh-pages": "^2.0.1",
     "parcel": "^1.10.3"
   }
 }
