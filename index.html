@@ -108,10 +108,7 @@ const MATRIX_SIZE = 10
 const NAME = 'DEN'
 const SURNAME = 'ILIN'
 const SYMBOL = 'S'
-const A = 'SOFTWARE'
-const DEVELOPER = 'DEVELOPER'
 const MAKER = 'MAKER'
-const C = 'ABC'
 const matrix = Array(MATRIX_SIZE).fill().map(() => Array(MATRIX_SIZE).fill())
 
 function random () {
@@ -130,25 +127,25 @@ function generatePosition (len, orientation) {
     posX = random()
     posY = random()
   }
-  console.warn('generate pos = ', { x:posX, y:posY })
+  // console.warn('generate pos = ', { x:posX, y:posY })
 
 
   for (let i = 0; i < len; i++) {
     if (orientation) {
       if (matrix[posX] && matrix[posX][posY + i]) {
-        console.warn('collision vertical')
+        // console.warn('collision vertical')
         return generatePosition(len, orientation)
       }
     } else {
       if (matrix[posX + i] && matrix[posX + i][posY]) {
-        console.warn('collision horizontal')
+        // console.warn('collision horizontal')
         return generatePosition(len, orientation)
       }
     }
     
   }
 
-  console.warn('final pos = ', { x:posX, y:posY })
+  // console.warn('final pos = ', { x:posX, y:posY })
   return { x:posX, y:posY }
 }
 
@@ -174,7 +171,7 @@ function drawMatrix () {
     el.forEach(el2 => {
       if (el2) {
         if(el2.type === 'symbol') {
-          row += `<div class="img_cont"><a target="_blank" title="${el2.network}" href="https://${el2.site}"><img class="symbol" src="${el2.network}.png"/></a></div>`
+          row += `<div class="img_cont"><a target="_blank" title="${el2.network}" href="https://${el2.site}"><img class="symbol" src="src/${el2.network}.png"/></a></div>`
           return 
         }
         row += `<div class="${el2.class}">${el2.letter}</div>`
