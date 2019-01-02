@@ -3,7 +3,7 @@
   "description": "Den Ilin's website",
   "author": "Den Ilin <followdarko@gmail.com>",
   "version": "0.0.1",
-  "main": "index.html",
+  "main": "dist/index.html",
   "license": "MIT",
   "repository": {
     "type": "git",
@@ -11,8 +11,8 @@
   },
   "scripts": {
     "dev": "cp src/* dist/ && parcel index.html",
-    "build": "parcel build index.html && cp src/* dist/",
-    "predeploy": "rm -rf dist && yarn build",
+    "build": "rm -rf dist && parcel build index.html && cp src/* dist/",
+    "predeploy": "yarn build",
     "deploy": "gh-pages -d dist"
   },
   "dependencies": {
