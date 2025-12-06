@@ -127,25 +127,21 @@ function generatePosition (len, orientation) {
     posX = random()
     posY = random()
   }
-  // console.warn('generate pos = ', { x:posX, y:posY })
-
 
   for (let i = 0; i < len; i++) {
     if (orientation) {
       if (matrix[posX] && matrix[posX][posY + i]) {
-        // console.warn('collision vertical')
+        // vertical collision
         return generatePosition(len, orientation)
       }
     } else {
       if (matrix[posX + i] && matrix[posX + i][posY]) {
-        // console.warn('collision horizontal')
+        // horizontal collision
         return generatePosition(len, orientation)
       }
     }
-    
   }
 
-  // console.warn('final pos = ', { x:posX, y:posY })
   return { x:posX, y:posY }
 }
 
@@ -194,7 +190,7 @@ matrixInsertString(NAME)
 matrixInsertString(SURNAME)
 matrixInsertString(SYMBOL, {type: 'symbol', network: 'github', site: 'github.com/followdarko'})
 matrixInsertString(SYMBOL, {type: 'symbol', network: 'telegram', site: 't.me/denilin'})
-matrixInsertString(SYMBOL, {type: 'symbol', network: 'twitter', site: 'twitter.com/followdarko'})
+matrixInsertString(SYMBOL, {type: 'symbol', network: 'twitter', site: 'x.com/followdarko'})
 
 drawMatrix()
 </script>
