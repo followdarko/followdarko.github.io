@@ -2,3 +2,5 @@
 ==================
 
 Personal homepage
+
+You can find more info on the [public page](https://github.com/followdarko/followdarko)
