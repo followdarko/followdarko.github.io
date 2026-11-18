@@ -169,7 +169,7 @@ function drawMatrix () {
     el.forEach(el2 => {
       if (el2) {
         if(el2.type === 'symbol') {
-          row += `<div class="img_cont"><a target="_blank" title="${el2.network}" href="https://${el2.site}"><img class="symbol" src="src/${el2.network}.png"/></a></div>`
+          row += `<div class="img_cont"><a target="_blank" title="${el2.title}" href="https://${el2.site}"><img class="symbol" src="src/${el2.network}.png"/></a></div>`
           return 
         }
         row += `<div class="${el2.class}">${el2.letter}</div>`
@@ -190,9 +190,9 @@ function drawMatrix () {
 matrixInsertString(MAKER, {class: 'maker'})
 matrixInsertString(NAME)
 matrixInsertString(SURNAME)
-matrixInsertString(SYMBOL, {type: 'symbol', network: 'Github', site: 'github.com/followdarko'})
-matrixInsertString(SYMBOL, {type: 'symbol', network: 'Telegram', site: 't.me/denilin'})
-matrixInsertString(SYMBOL, {type: 'symbol', network: 'X/Twitter', site: 'x.com/followdarko'})
+matrixInsertString(SYMBOL, {type: 'symbol', network: 'github', title: 'Github', site: 'github.com/followdarko'})
+matrixInsertString(SYMBOL, {type: 'symbol', network: 'telegram', title: 'Telegram', site: 't.me/denilin'})
+matrixInsertString(SYMBOL, {type: 'symbol', network: 'twitter', title: 'X/Twitter', site: 'x.com/followdarko'})
 
 drawMatrix()
 </script>
